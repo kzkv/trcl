@@ -271,6 +271,7 @@
 				8B88E1D61D3ED26400BADB5D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
