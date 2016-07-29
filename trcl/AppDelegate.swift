@@ -8,10 +8,12 @@
 
 import Cocoa
 import Foundation
+import AppKit
+
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
-
+    
     @IBOutlet weak var window: NSWindow!
     @IBOutlet weak var statusMenu: NSMenu!
     
@@ -19,92 +21,144 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     var timer = NSTimer()
     
-    let tzz = ["America/Los_Angeles", "America/New_York", "Europe/Moscow"]
+    // To be replaced by persistable settings
+    let STtimeZones = ["America/Los_Angeles", "America/New_York", "Europe/Moscow"]
+    let STrus24H = true
     
-    var ftz = ""
+    
+    // Russian timezone for lookup when user settings are to use 24H/military there
+    let RUS_TZ = "Europe/Moscow"
+    
+    
+    // Font attributes
+    let ampmFontAttr = [ NSFontAttributeName: NSFont.menuBarFontOfSize(10) ]
+    let timeFontAttr = [ NSFontAttributeName: NSFont.menuBarFontOfSize(0) ]
+    let dateFontAttr = [ NSFontAttributeName: NSFont.menuBarFontOfSize(10) ]
+    let notLocalFontAttr = [ NSForegroundColorAttributeName: NSColor.grayColor() ]
 
+    
     
     @IBAction func applicationDidFinishLaunching(aNotification: NSNotification) {
         
-//        statusItem.title = ""
+        //        statusItem.title = ""
         statusItem.menu = statusMenu
         
         timer.invalidate()
         timer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
         
-        
-        for tz in tzz {
-            print(isLocal(tz))
-        }
-
-        
     }
-
+    
     @IBAction func menuClicked(sender: NSMenuItem) {
         
         
     }
     
-
+    // TODO: исправить внешний вид шрифта при нажатой кнопке
+    // TODO: перейти на attributed для button-statusmenu
+    
     func timerAction() {
         
         // PDT EDT MSK
+        
+        let ftz = NSMutableAttributedString(string: "")
+        
+        for (index, tz) in STtimeZones.enumerate() {
+            
+            var timeArray: [String] = ["",""]
+        
+//            var timeAttrString = NSAttributedString(string: "", attributes: timeFontAttributes)
 
-        ftz = ""
-
-        for (index, tz) in tzz.enumerate() {
             
             if isLocal(tz) {
-                ftz += formatTime(tz, local: true) + " " + getDate()
+                timeArray = formatTime(tz, local: true)
+                
+                ftz.appendAttributedString(NSAttributedString(string: timeArray[0], attributes: timeFontAttr))
+                ftz.appendAttributedString(NSAttributedString(string: timeArray[1], attributes: ampmFontAttr))
+                ftz.appendAttributedString(NSAttributedString(string: " ", attributes: ampmFontAttr))
+                ftz.appendAttributedString(NSAttributedString(string: getDate(), attributes: dateFontAttr))
+                // TODO: отключаемая дата
+
             }
             else {
-                ftz += formatTime(tz, local: false)
+                timeArray = formatTime(tz, local: false)
+                
+                let rangeStart = ftz.length
+                
+                ftz.appendAttributedString(NSAttributedString(string: timeArray[0], attributes: timeFontAttr))
+                ftz.appendAttributedString(NSAttributedString(string: timeArray[1], attributes: ampmFontAttr))
+                ftz.addAttributes(notLocalFontAttr, range: NSMakeRange(rangeStart, ftz.length-rangeStart))
+                
             }
-            
-            if index != tzz.count {
-                ftz += " "
+
+            if index != STtimeZones.count {
+                ftz.appendAttributedString(NSAttributedString(string: " ", attributes: ampmFontAttr))
             }
             
             
         }
         
         
-        statusItem.title = ftz
+        statusItem.attributedTitle = ftz
     }
     
-
     
-    func formatTime(tz: String, local: Bool) -> String {
+    // Array of time strings
+    func formatTime(timeZone: String, local: Bool) -> Array<String> {
         
-        let formatter = NSDateFormatter()
-        if local {
-           formatter.dateFormat = "h:mma"
-        } else {
-           formatter.dateFormat = "ha"
+        let timeFormatter = NSDateFormatter()
+        let ampm = NSDateFormatter()
+        
+        var timeArray: [String] = ["",""]
+        
+        
+        if STrus24H == true && timeZone == RUS_TZ {
+            if local {
+                timeFormatter.dateFormat = "H:mm"
+                ampm.dateFormat = ""
+            }
+            else {
+                timeFormatter.dateFormat = "h"
+                ampm.dateFormat = "a"
+            }
+            
         }
-    
-        formatter.timeZone = NSTimeZone(name: tz)
+        else {
+            if local {
+                timeFormatter.dateFormat = "h:mm"
+            }
+            else {
+                timeFormatter.dateFormat = "h"
+            }
+            
+            ampm.dateFormat = "a"
+            
+        }
         
-        return formatter.stringFromDate(NSDate())
+        timeFormatter.timeZone = NSTimeZone(name: timeZone)
+        ampm.timeZone = NSTimeZone(name: timeZone)
+        
+        timeArray[0] = timeFormatter.stringFromDate(NSDate())
+        timeArray[1] = ampm.stringFromDate(NSDate())
+        
+        return timeArray
     }
     
     
     func isLocal(tz: String) -> Bool {
-    
+        
         return NSTimeZone.localTimeZone().name == tz
         
     }
     
     
     func getDate() -> String { //    TODO: вообще-то это нет смысла вычислять два раза за секунду
-        let currentDate = NSDate()
         let usDateFormat = NSDateFormatter()
-        usDateFormat.dateFormat = "MMM d, EEEEEE"
+        usDateFormat.dateFormat = "MMM d"
         usDateFormat.locale = NSLocale(localeIdentifier: "en-US")
-        return usDateFormat.stringFromDate(currentDate)
+        return usDateFormat.stringFromDate(NSDate())
     }
     
-
+    
 }
 
 
