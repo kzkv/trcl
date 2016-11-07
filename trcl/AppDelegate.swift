@@ -15,19 +15,19 @@ import AppKit
 class AppDelegate: NSObject, NSApplicationDelegate {
     
     // Current bundle name to a constant
-    let APPNAME = NSBundle.mainBundle().infoDictionary!["CFBundleName"] as! String
+    let APPNAME = Bundle.main.infoDictionary!["CFBundleName"] as! String
 
 
     
     @IBOutlet weak var statusMenu: NSMenu!
     
-    @IBAction func quitClicked(sender: NSMenuItem) {
+    @IBAction func quitClicked(_ sender: NSMenuItem) {
     }
     
     
-    let mainStatusItem = NSStatusBar.systemStatusBar().statusItemWithLength(-1)
+    let mainStatusItem = NSStatusBar.system().statusItem(withLength: -1)
     
-    var timer = NSTimer()
+    var timer = Timer()
     
     // TODO: persistable settings
 
@@ -43,20 +43,20 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var timeZones = [TRTimeZone]()
     
     // Local timezone object 
-    var localTimeZone = TRTimeZone(name: NSTimeZone.localTimeZone().name, local: true, visible: false)
+    var localTimeZone = TRTimeZone(name: TimeZone.autoupdatingCurrent.identifier, local: true, visible: false)
     
     
-    @IBAction func applicationDidFinishLaunching(aNotification: NSNotification) {
+    @IBAction func applicationDidFinishLaunching(_ aNotification: Notification) {
         
         setTimeZones()
         buildMenu()
         
         timer.invalidate()
-        timer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
         
     }
     
-    @IBAction func menuClicked(sender: NSMenuItem) {
+    @IBAction func menuClicked(_ sender: NSMenuItem) {
         
         
     }
@@ -79,18 +79,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         
         var font: NSFont
-        font = NSFont.systemFontOfSize(12)
+        font = NSFont.systemFont(ofSize: 12)
 //                        font = NSFont(name: name, size: pointSize) ?? systemFont
-        let fontManager = NSFontManager.sharedFontManager()
-        font = fontManager.convertFont(font, toHaveTrait: .SmallCapsFontMask)
+        let fontManager = NSFontManager.shared()
+        font = fontManager.convert(font, toHaveTrait: .smallCapsFontMask)
         let ampmFontAttr = [ NSFontAttributeName: font ]
         
-        let timeFontAttr = [ NSFontAttributeName: NSFont.menuBarFontOfSize(0) ]
+        let timeFontAttr = [ NSFontAttributeName: NSFont.menuBarFont(ofSize: 0) ]
 //        let dateFontAttr = [ NSFontAttributeName: NSFont.menuBarFontOfSize(10) ]
-        let notLocalFontAttr = [ NSForegroundColorAttributeName: NSColor.grayColor() ]
+        let notLocalFontAttr = [ NSForegroundColorAttributeName: NSColor.gray ]
         
         
-        for (index, tz) in timeZones.enumerate() {
+        for (index, tz) in timeZones.enumerated() {
             
             var timeArray: [String] = ["",""]
         
@@ -100,10 +100,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 if tz.local == true {
                     timeArray = formatTime(tz.name, local: true)
 
-                    ftz.appendAttributedString(NSAttributedString(string: timeArray[0], attributes: timeFontAttr))
-                    ftz.appendAttributedString(NSAttributedString(string: timeArray[1], attributes: ampmFontAttr))
-                    ftz.appendAttributedString(NSAttributedString(string: " ", attributes: ampmFontAttr))
-                    ftz.appendAttributedString(NSAttributedString(string: getDate(), attributes: ampmFontAttr))
+                    ftz.append(NSAttributedString(string: timeArray[0], attributes: timeFontAttr))
+                    ftz.append(NSAttributedString(string: timeArray[1], attributes: ampmFontAttr))
+                    ftz.append(NSAttributedString(string: " ", attributes: ampmFontAttr))
+                    ftz.append(NSAttributedString(string: getDate(), attributes: ampmFontAttr))
                     // TODO: отключаемая дата
 
                 }
@@ -112,14 +112,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                     
                     let rangeStart = ftz.length
                     
-                    ftz.appendAttributedString(NSAttributedString(string: timeArray[0], attributes: timeFontAttr))
-                    ftz.appendAttributedString(NSAttributedString(string: timeArray[1], attributes: ampmFontAttr))
+                    ftz.append(NSAttributedString(string: timeArray[0], attributes: timeFontAttr))
+                    ftz.append(NSAttributedString(string: timeArray[1], attributes: ampmFontAttr))
                     ftz.addAttributes(notLocalFontAttr, range: NSMakeRange(rangeStart, ftz.length-rangeStart))
                     
                 }
 
                 if index != timeZones.count {
-                    ftz.appendAttributedString(NSAttributedString(string: " ", attributes: ampmFontAttr))
+                    ftz.append(NSAttributedString(string: " ", attributes: ampmFontAttr))
                 }
             } else {
                 nonvisibleCounter += 1
@@ -129,7 +129,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         if nonvisibleCounter == timeZones.endIndex {
             // Incrementing counter to avoid empty string
-            ftz.appendAttributedString(NSAttributedString(string: "trcl", attributes: timeFontAttr))
+            ftz.append(NSAttributedString(string: "trcl", attributes: timeFontAttr))
         }
         
         mainStatusItem.attributedTitle = ftz
@@ -137,10 +137,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     
     // Array of time strings
-    func formatTime(timeZone: String, local: Bool) -> Array<String> {
+    func formatTime(_ timeZone: String, local: Bool) -> Array<String> {
         
-        let timeFormatter = NSDateFormatter()
-        let ampm = NSDateFormatter()
+        let timeFormatter = DateFormatter()
+        let ampm = DateFormatter()
         
         var timeArray: [String] = ["",""]
         
@@ -168,27 +168,27 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             
         }
         
-        timeFormatter.timeZone = NSTimeZone(name: timeZone)
-        ampm.timeZone = NSTimeZone(name: timeZone)
+        timeFormatter.timeZone = TimeZone(identifier: timeZone)
+        ampm.timeZone = TimeZone(identifier: timeZone)
         
-        timeArray[0] = timeFormatter.stringFromDate(NSDate())
-        timeArray[1] = ampm.stringFromDate(NSDate())
+        timeArray[0] = timeFormatter.string(from: Date())
+        timeArray[1] = ampm.string(from: Date())
         
         return timeArray
     }
     
     
-    func isLocal(tz: String) -> Bool {
+    func isLocal(_ tz: String) -> Bool {
         
-        return NSTimeZone.localTimeZone().name == tz
+        return TimeZone.autoupdatingCurrent.identifier == tz
         
     }
     
     func setLocal() {
         
-        localTimeZone.name = NSTimeZone.localTimeZone().name
+        localTimeZone.name = TimeZone.autoupdatingCurrent.identifier
         
-        for (_,tz) in timeZones.enumerate() {
+        for (_,tz) in timeZones.enumerated() {
             tz.local = false
             
             if tz.offset() == localTimeZone.offset() {
@@ -206,10 +206,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     
     func getDate() -> String { //    TODO: вообще-то это нет смысла вычислять два раза за секунду
-        let usDateFormat = NSDateFormatter()
+        let usDateFormat = DateFormatter()
         usDateFormat.dateFormat = "MMM d"
-        usDateFormat.locale = NSLocale(localeIdentifier: "en-US")
-        return usDateFormat.stringFromDate(NSDate())
+        usDateFormat.locale = Locale(identifier: "en-US")
+        return usDateFormat.string(from: Date())
     }
     
     
@@ -222,7 +222,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         
         // Add all timezone items
-        for (index, tz) in timeZones.enumerate() {
+        for (index, tz) in timeZones.enumerated() {
 
             if tz.local == true {
                 statusItem = NSMenuItem(title: tz.fancyname(), action: nil, keyEquivalent: "")
@@ -243,7 +243,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         
         // Static menu items
-        statusMenu.addItem(NSMenuItem.separatorItem())
+        statusMenu.addItem(NSMenuItem.separator())
         statusMenu.addItem(NSMenuItem(title: "Quit", action:#selector(NSApp.terminate(_:)), keyEquivalent: ""))
         
         mainStatusItem.menu = statusMenu
@@ -255,7 +255,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         var addedTimezone: TRTimeZone
         
-        for (_, tz) in STtimeZones.enumerate() {
+        for (_, tz) in STtimeZones.enumerated() {
             addedTimezone = TRTimeZone.init(name: tz, local: false, visible: true)
             
             timeZones.append(addedTimezone)
@@ -263,7 +263,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     
-    func toggleVisibility(sender: NSMenuItem) {
+    func toggleVisibility(_ sender: NSMenuItem) {
         let tz: TRTimeZone = sender.representedObject as! TRTimeZone
         
         tz.visible = !tz.visible
@@ -288,21 +288,21 @@ class TRTimeZone {
     var visible: Bool = false
     
     func offset() -> String {
-        let dateFormat = NSDateFormatter()
-        dateFormat.timeZone = NSTimeZone(name: self.name)
+        let dateFormat = DateFormatter()
+        dateFormat.timeZone = TimeZone(identifier: self.name)
         dateFormat.dateFormat = "Z"
-        return dateFormat.stringFromDate(NSDate())
+        return dateFormat.string(from: Date())
     }
     
     func fancyname() -> String {
 //        let fn = NSTimeZone(name: self.name)!.localizedName(.ShortGeneric, locale: NSLocale(localeIdentifier: "en-US"))
 //        return fn!
 
-        let dateFormat = NSDateFormatter()
-        dateFormat.timeZone = NSTimeZone(name: self.name)
-        dateFormat.locale = NSLocale(localeIdentifier: "en-US")
+        let dateFormat = DateFormatter()
+        dateFormat.timeZone = TimeZone(identifier: self.name)
+        dateFormat.locale = Locale(identifier: "en-US")
         dateFormat.dateFormat = "vvvv, ZZZZ"
-        return dateFormat.stringFromDate(NSDate())
+        return dateFormat.string(from: Date())
         
     }
     
