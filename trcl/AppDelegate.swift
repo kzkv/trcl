@@ -30,14 +30,43 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var timer = Timer()
     
     // TODO: persistable settings
-
-    let STtimeZones = ["America/Los_Angeles", "America/New_York", "Europe/Moscow"]
+    let defaults = UserDefaults.standard
+    let use24HForLocalTZ = "use24HForLocalTZ"
+    let displayDateForLocalTZ = "displayDateForLocalTZ"
     
-    // Russian timezone for lookup when user settings are to use 24H/military there
-    var STrus24H = true
-    let RUS_TZ = "Europe/Moscow"
+
+    let STtimeZones = [
+//                        "America/Nome", //-11 Sic! Possibly not a principle city
+                        "Pacific/Honolulu", //-10
+                        "America/Anchorage", //-9
+                        "America/Los_Angeles", //-8
+                        "America/Phoenix", //-7
+                        "America/Chicago", //-6
+                        "America/New_York", //-5
+                        "America/Santiago", //-4
+                        "America/Sao_Paulo", //-3
+//                        "America/Noronha", //-2 Sic! Possibly not a principle city
+                        "Atlantic/Cape_Verde", //-1
+                        "Europe/London", //0
+                        "Europe/Berlin", //1
+                        "Asia/Jerusalem", //2 Sic! Possibly not a principle city
+                        "Europe/Moscow", //3 Sic! Daylight saving
+                        "Asia/Dubai", //4
+                        "Asia/Yekaterinburg", //5 Sic! Possibly not a principle city
+                        "Asia/Omsk", //6
+                        "Asia/Jakarta", //7 Sic! Possibly not a principle city
+                        "Asia/Singapore", //8 Sic! Didn't find Beijing on the list
+                        "Asia/Tokyo", //9
+                        "Australia/Sydney", //10
+//                        "Pacific/Noumea", //11 Sic! Possibly not a principle city
+                        "Pacific/Fiji" //12
+    ]
+
+//    let STtimeZones = NSTimeZone.knownTimeZoneNames
+    let tzlist = NSTimeZone.knownTimeZoneNames
     
     var STshowDate = true
+    
     
     // Time zone array
     var timeZones = [TRTimeZone]()
@@ -46,10 +75,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var localTimeZone = TRTimeZone(name: TimeZone.autoupdatingCurrent.identifier, local: true, visible: false)
     
     
-    @IBAction func applicationDidFinishLaunching(_ aNotification: Notification) {
+    func applicationDidFinishLaunching(_ notification: Notification) {
         
         setTimeZones()
         buildMenu()
+        
+//        print(tzlist)
+        
+        // TODO: proper defaults settings for the shipped bundle
+        setDefaults()
         
         timer.invalidate()
         timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
@@ -77,9 +111,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         var nonvisibleCounter: Int = 0
         
-        
         var font: NSFont
-        font = NSFont.systemFont(ofSize: 12)
+
+        font = NSFont.menuBarFont(ofSize: 10)
 //                        font = NSFont(name: name, size: pointSize) ?? systemFont
         let fontManager = NSFontManager.shared()
         font = fontManager.convert(font, toHaveTrait: .smallCapsFontMask)
@@ -103,8 +137,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                     ftz.append(NSAttributedString(string: timeArray[0], attributes: timeFontAttr))
                     ftz.append(NSAttributedString(string: timeArray[1], attributes: ampmFontAttr))
                     ftz.append(NSAttributedString(string: " ", attributes: ampmFontAttr))
-                    ftz.append(NSAttributedString(string: getDate(), attributes: ampmFontAttr))
-                    // TODO: отключаемая дата
+                    
+                    if defaults.bool(forKey: displayDateForLocalTZ) == true {
+                        ftz.append(NSAttributedString(string: getDate(), attributes: ampmFontAttr))
+                    }
 
                 }
                 else {
@@ -144,28 +180,20 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         var timeArray: [String] = ["",""]
         
-        
-        if STrus24H == true && timeZone == RUS_TZ {
-            if local {
+        if local {
+            if defaults.bool(forKey: use24HForLocalTZ) == true {
                 timeFormatter.dateFormat = "H:mm"
                 ampm.dateFormat = ""
+                
             }
             else {
-                timeFormatter.dateFormat = "h"
+                timeFormatter.dateFormat = "h:mm"
                 ampm.dateFormat = "a"
             }
-            
         }
         else {
-            if local {
-                timeFormatter.dateFormat = "h:mm"
-            }
-            else {
-                timeFormatter.dateFormat = "h"
-            }
-            
+            timeFormatter.dateFormat = "h"
             ampm.dateFormat = "a"
-            
         }
         
         timeFormatter.timeZone = TimeZone(identifier: timeZone)
@@ -196,12 +224,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
         }
         
-        
-        
-//        print(timeZones[0...timeZones.endIndex].local)
-        
-        
-        
     }
     
     
@@ -220,8 +242,36 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         statusMenu.removeAllItems()
         
+        // Top menu items
+        
+        // use24HForLocalTZ
+        statusItem = NSMenuItem(title: "Local time in 24H format", action:#selector(self.toggleUse24HForLocalTZ(_:)), keyEquivalent: "")
+        
+        if defaults.bool(forKey: use24HForLocalTZ) == true {
+            statusItem.state = NSOnState
+        } else {
+            statusItem.state = NSOffState
+        }
+        
+        statusMenu.addItem(statusItem)
+        
+        
+        // displayDateForLocalTZ
+        statusItem = NSMenuItem(title: "Display local date", action:#selector(self.toggleDisplayDateForLocalTZ(_:)), keyEquivalent: "")
+        
+        if defaults.bool(forKey: displayDateForLocalTZ) == true {
+            statusItem.state = NSOnState
+        } else {
+            statusItem.state = NSOffState
+        }
+        
+        statusMenu.addItem(statusItem)
+
+        
         
         // Add all timezone items
+        statusMenu.addItem(NSMenuItem.separator())
+        
         for (index, tz) in timeZones.enumerated() {
 
             if tz.local == true {
@@ -242,7 +292,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             
         }
         
-        // Static menu items
+        // Footer menu items
         statusMenu.addItem(NSMenuItem.separator())
         statusMenu.addItem(NSMenuItem(title: "Quit", action:#selector(NSApp.terminate(_:)), keyEquivalent: ""))
         
@@ -273,8 +323,21 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         STshowDate = !STshowDate
     }
     
-    func toggle24H() {
-        STrus24H = !STrus24H
+    func toggleUse24HForLocalTZ(_ sender: NSMenuItem) {
+        defaults.set(!defaults.bool(forKey: use24HForLocalTZ), forKey: use24HForLocalTZ)
+    }
+    
+    func toggleDisplayDateForLocalTZ(_ sender: NSMenuItem) {
+        defaults.set(!defaults.bool(forKey: displayDateForLocalTZ), forKey: displayDateForLocalTZ)
+    }
+    
+    
+    
+    func setDefaults() {
+        
+        defaults.set(false, forKey: use24HForLocalTZ)
+        defaults.set(true, forKey: displayDateForLocalTZ)
+        
     }
     
 }
@@ -320,6 +383,7 @@ class TRTimeZone {
     }
     
 }
+
 
 
 
