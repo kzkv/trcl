@@ -7,12 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8B743AF01DD7F1170006F8F5 /* TRTimeZone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B743AEF1DD7F1170006F8F5 /* TRTimeZone.swift */; };
+		8B743AF61DD7F2820006F8F5 /* timeZones.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B743AF51DD7F2820006F8F5 /* timeZones.swift */; };
 		8B88E1CB1D3ED26400BADB5D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B88E1CA1D3ED26400BADB5D /* AppDelegate.swift */; };
 		8B88E1CD1D3ED26400BADB5D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8B88E1CC1D3ED26400BADB5D /* Assets.xcassets */; };
 		8B88E1D01D3ED26400BADB5D /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B88E1CE1D3ED26400BADB5D /* MainMenu.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8B743AEF1DD7F1170006F8F5 /* TRTimeZone.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TRTimeZone.swift; sourceTree = "<group>"; };
+		8B743AF51DD7F2820006F8F5 /* timeZones.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = timeZones.swift; sourceTree = "<group>"; };
 		8B88E1C71D3ED26400BADB5D /* trcl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = trcl.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B88E1CA1D3ED26400BADB5D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8B88E1CC1D3ED26400BADB5D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -51,9 +55,11 @@
 			isa = PBXGroup;
 			children = (
 				8B88E1CA1D3ED26400BADB5D /* AppDelegate.swift */,
+				8B743AF51DD7F2820006F8F5 /* timeZones.swift */,
 				8B88E1CC1D3ED26400BADB5D /* Assets.xcassets */,
 				8B88E1CE1D3ED26400BADB5D /* MainMenu.xib */,
 				8B88E1D11D3ED26400BADB5D /* Info.plist */,
+				8B743AEF1DD7F1170006F8F5 /* TRTimeZone.swift */,
 			);
 			path = trcl;
 			sourceTree = "<group>";
@@ -129,7 +135,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B743AF01DD7F1170006F8F5 /* TRTimeZone.swift in Sources */,
 				8B88E1CB1D3ED26400BADB5D /* AppDelegate.swift in Sources */,
+				8B743AF61DD7F2820006F8F5 /* timeZones.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
