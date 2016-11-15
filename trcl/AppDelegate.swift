@@ -6,6 +6,9 @@
 //  Copyright © 2016 Tom Kazakov. All rights reserved.
 //
 
+// TODO: autostart
+
+
 import Cocoa
 import Foundation
 
@@ -16,32 +19,33 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let APPNAME = Bundle.main.infoDictionary!["CFBundleName"] as! String
 
     @IBOutlet weak var statusMenu: NSMenu!
-
-    @IBAction func quitClicked(_ sender: NSMenuItem) {
-    }
-    
     
     let mainStatusItem = NSStatusBar.system().statusItem(withLength: -1)
     
     var timer = Timer()
     
-    // TODO: persistable settings
+    // Defaults namestring constants
     let defaults = UserDefaults.standard
     let use24HForLocalTZ = "use24HForLocalTZ"
     let displayDateForLocalTZ = "displayDateForLocalTZ"
     
-    
-    // Time zone array
+    // Time zone objects array
     var timeZones = [TRTimeZone]()
     
     
     func applicationDidFinishLaunching(_ notification: Notification) {
         
         setTimeZones()
+        
         buildMenu()
         
         // TODO: proper defaults settings for the shipped bundle
-        setDefaults()
+        
+        
+        UserDefaults.standard.register(defaults: [
+            use24HForLocalTZ : false,
+            displayDateForLocalTZ : true
+            ])
         
         timer.invalidate()
         timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
@@ -102,18 +106,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         var addedTimezone: TRTimeZone
         
         for (_, tz) in STtimeZones.enumerated() {
-            addedTimezone = TRTimeZone.init(name: tz, visible: false)
-            
+            addedTimezone = TRTimeZone.init(name: tz)
             timeZones.append(addedTimezone)
+            
+            // Populating defaults with visibility settings
+            UserDefaults.standard.register(defaults: [addedTimezone.name+"Visibile" : false])
+            
         }
-    }
-    
-    
-    func setDefaults() {
-        
-        defaults.set(false, forKey: use24HForLocalTZ)
-        defaults.set(true, forKey: displayDateForLocalTZ)
-        
     }
     
     
@@ -166,7 +165,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
             else {
                 
-                if tz.visible == true {
+                
+                if defaults.bool(forKey: tz.name+"Visible") == true {
                     
                     if previousWasLocal == true {
                         ftz.append(NSAttributedString(string: " ", attributes: ampmFontAttr))
@@ -246,11 +246,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             
             if tz.isLocal() == true {
                 statusItem = NSMenuItem(title: tz.fancyName(), action: nil, keyEquivalent: "")
+                
+                // Settings on visibility state for the local timezone
+                defaults.set(true, forKey: tz.name+"Visible")
+
             } else {
                 statusItem = NSMenuItem(title: tz.fancyName(), action:#selector(self.toggleVisibility(_:)), keyEquivalent: "")
             }
             
-            if tz.isLocal() == false && tz.visible == true {
+            if tz.isLocal() == false && defaults.bool(forKey: tz.name+"Visible") == true {
                 statusItem.state = NSOnState
             } else {
                 statusItem.state = NSOffState
@@ -274,7 +278,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func toggleVisibility(_ sender: NSMenuItem) {
         let tz: TRTimeZone = sender.representedObject as! TRTimeZone
         
-        tz.visible = !tz.visible
+        defaults.set(!defaults.bool(forKey: tz.name+"Visible"), forKey: tz.name+"Visible")
     }
     
     
@@ -287,6 +291,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         defaults.set(!defaults.bool(forKey: displayDateForLocalTZ), forKey: displayDateForLocalTZ)
     }
     
+    @IBAction func quitClicked(_ sender: NSMenuItem) {
+    }
 
     
 }

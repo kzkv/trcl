@@ -9,10 +9,7 @@
 import Foundation
 
 class TRTimeZone {
-    
     var name: String = ""
-    
-    var visible: Bool = false
     
     func offset() -> String {
         let dateFormat = DateFormatter()
@@ -22,20 +19,16 @@ class TRTimeZone {
     }
     
     func fancyName() -> String {
-        //        let fn = NSTimeZone(name: self.name)!.localizedName(.ShortGeneric, locale: NSLocale(localeIdentifier: "en-US"))
-        //        return fn!
-        
         let dateFormat = DateFormatter()
+
         dateFormat.timeZone = TimeZone(identifier: self.name)
         dateFormat.locale = Locale(identifier: "en-US")
         dateFormat.dateFormat = "vvvv, ZZZZ"
         return dateFormat.string(from: Date())
-        
     }
     
     func isLocal() -> Bool {
-        
-        let localTimeZone = TRTimeZone(name: TimeZone.autoupdatingCurrent.identifier, visible: false)
+        let localTimeZone = TRTimeZone(name: TimeZone.autoupdatingCurrent.identifier)
         
         if self.offset() == localTimeZone.offset() {
             return true
@@ -45,9 +38,8 @@ class TRTimeZone {
         }
     }
     
-    init (name: String, visible: Bool) {
+    init (name: String) {
         self.name = name
-        self.visible = visible
     }
     
 }
