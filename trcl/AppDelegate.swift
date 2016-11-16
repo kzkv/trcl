@@ -11,6 +11,8 @@
 
 import Cocoa
 import Foundation
+import ServiceManagement
+
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
@@ -23,11 +25,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let mainStatusItem = NSStatusBar.system().statusItem(withLength: -1)
     
     var timer = Timer()
-    
-    // Defaults namestring constants
-    let defaults = UserDefaults.standard
-    let use24HForLocalTZ = "use24HForLocalTZ"
-    let displayDateForLocalTZ = "displayDateForLocalTZ"
     
     // Time zone objects array
     var timeZones = [TRTimeZone]()
@@ -44,7 +41,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         UserDefaults.standard.register(defaults: [
             use24HForLocalTZ : false,
-            displayDateForLocalTZ : true
+            displayDateForLocalTZ : true,
+            autostart: false
             ])
         
         timer.invalidate()
@@ -268,6 +266,20 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         // Footer menu items
         statusMenu.addItem(NSMenuItem.separator())
+
+        // autostart
+        statusItem = NSMenuItem(title: "Autostart trcl", action:#selector(self.toggleAutostart(_:)), keyEquivalent: "")
+        
+        if defaults.bool(forKey: autostart) == true {
+            statusItem.state = NSOnState
+        } else {
+            statusItem.state = NSOffState
+        }
+        
+        statusMenu.addItem(statusItem)
+
+        
+        statusMenu.addItem(NSMenuItem.separator())
         statusMenu.addItem(NSMenuItem(title: "Quit", action:#selector(NSApp.terminate(_:)), keyEquivalent: ""))
         
         mainStatusItem.menu = statusMenu
@@ -289,6 +301,27 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func toggleDisplayDateForLocalTZ(_ sender: NSMenuItem) {
         defaults.set(!defaults.bool(forKey: displayDateForLocalTZ), forKey: displayDateForLocalTZ)
+    }
+    
+    func toggleAutostart(_ sender: NSMenuItem) {
+        defaults.set(!defaults.bool(forKey: autostart), forKey: autostart)
+        
+        let appBundleIdentifier = "kzkv.trclAutostartHelper" as CFString
+        var autostartValue: Bool
+        
+        autostartValue = defaults.bool(forKey: autostart)
+        
+        if SMLoginItemSetEnabled(appBundleIdentifier, autostartValue) {
+            if autostartValue {
+                NSLog("trcl: Successfully added login item.")
+            } else {
+                NSLog("trcl: Successfully removed login item.")
+            }
+            
+        } else {
+            NSLog("trcl: Failed to add login item.")
+        }
+        
     }
     
     @IBAction func quitClicked(_ sender: NSMenuItem) {

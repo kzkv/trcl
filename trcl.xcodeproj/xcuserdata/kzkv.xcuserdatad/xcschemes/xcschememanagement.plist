@@ -9,9 +9,19 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>trclAutostartHelper.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>8B743AFA1DDBAD0C0006F8F5</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>8B88E1C61D3ED26400BADB5D</key>
 		<dict>
 			<key>primary</key>
