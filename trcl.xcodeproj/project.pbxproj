@@ -146,10 +146,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8B88E1D41D3ED26400BADB5D /* Build configuration list for PBXNativeTarget "trcl" */;
 			buildPhases = (
+				8B743B181DDC79CD0006F8F5 /* Run Script */,
 				8B88E1C31D3ED26400BADB5D /* Sources */,
 				8B88E1C41D3ED26400BADB5D /* Frameworks */,
 				8B88E1C51D3ED26400BADB5D /* Resources */,
 				8B743B0C1DDBAD7A0006F8F5 /* CopyFiles */,
+				8B743B191DDC7A0C0006F8F5 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -219,6 +221,38 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		8B743B181DDC79CD0006F8F5 /* Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Set the build number to the count of Git commits\nbuildNumber=$(git rev-list HEAD | wc -l | tr -d ' ')\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"";
+			showEnvVarsInLog = 0;
+		};
+		8B743B191DDC7A0C0006F8F5 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Set the build number to \"DEVELOPMENT\"\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion DEVELOPMENT\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		8B743AF71DDBAD0C0006F8F5 /* Sources */ = {

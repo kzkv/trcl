@@ -211,6 +211,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         statusMenu.removeAllItems()
         
         // Top menu items
+ 
+        let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
+        let build = Bundle.main.infoDictionary?["CFBundleVersion"] as! String
+        let versionString = "Ternary clock (trcl) by Tom Kazakov, v" + version + "(" + build + ")"
+        statusItem = NSMenuItem(title: versionString, action: nil, keyEquivalent: "")
+        statusMenu.addItem(statusItem)
+        statusMenu.addItem(NSMenuItem.separator())
+        
         
         // use24HForLocalTZ
         statusItem = NSMenuItem(title: "Local time in 24H format", action:#selector(self.toggleUse24HForLocalTZ(_:)), keyEquivalent: "")
@@ -313,8 +321,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         if SMLoginItemSetEnabled(appBundleIdentifier, autostartValue) {
             if autostartValue {
+                NSLog(String(defaults.bool(forKey: autostart)))
                 NSLog("trcl: Successfully added login item.")
             } else {
+                NSLog(String(defaults.bool(forKey: autostart)))
                 NSLog("trcl: Successfully removed login item.")
             }
             
