@@ -15,3 +15,8 @@ let use24HForLocalTZ = "use24HForLocalTZ"
 let displayDateForLocalTZ = "displayDateForLocalTZ"
 let autostart = "autostart"
 
+// Time zone objects array
+var timeZones = [TRTimeZone]()
+
+// Current date for the main string
+var currentDateString = String()

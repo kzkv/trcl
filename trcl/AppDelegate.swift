@@ -7,7 +7,8 @@
 //
 
 // TODO: autostart
-
+// TODO: исправить внешний вид шрифта при нажатой кнопке
+// TODO: перейти на attributed для button-statusmenu
 
 import Cocoa
 import Foundation
@@ -21,107 +22,61 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let APPNAME = Bundle.main.infoDictionary!["CFBundleName"] as! String
 
     @IBOutlet weak var statusMenu: NSMenu!
+//    var statusMenu = NSMenu(title: "Status Menu")
+    
+    // NSMenuDelegate call
     
     let mainStatusItem = NSStatusBar.system().statusItem(withLength: -1)
     
-    var timer = Timer()
-    
-    // Time zone objects array
-    var timeZones = [TRTimeZone]()
+    var timer = Timer()    
+    var starterTimer = Timer()
     
     
     func applicationDidFinishLaunching(_ notification: Notification) {
         
+        currentDateString = getDate()
+        
         setTimeZones()
-        
-        buildMenu()
-        
-        // TODO: proper defaults settings for the shipped bundle
-        
         
         UserDefaults.standard.register(defaults: [
             use24HForLocalTZ : false,
             displayDateForLocalTZ : true,
-            autostart: false
+//            autostart: false
             ])
         
-        timer.invalidate()
-        timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
+        starterTimer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(starterTimerAction), userInfo: nil, repeats: true)
         
     }
     
-    @IBAction func menuClicked(_ sender: NSMenuItem) {
+    // Setting main timer in sync with system clock
+    func starterTimerAction() {
+        let currentTime = NSDate().timeIntervalSince1970
+        var integer = 0.0
+        let fraction = modf(currentTime, &integer)
+        let rounded = Double(round(10*fraction)/10)
         
-        
-    }
-    
-    
-    // Array of time strings
-    func formatTime(_ timeZone: String, local: Bool) -> Array<String> {
-        
-        let timeFormatter = DateFormatter()
-        let ampm = DateFormatter()
-        
-        var timeArray: [String] = ["",""]
-        
-        if local {
-            if defaults.bool(forKey: use24HForLocalTZ) == true {
-                timeFormatter.dateFormat = "H:mm"
-                ampm.dateFormat = ""
-                
-            }
-            else {
-                timeFormatter.dateFormat = "h:mm"
-                ampm.dateFormat = "a"
-            }
-        }
-        else {
-            timeFormatter.dateFormat = "h"
-            ampm.dateFormat = "a"
-        }
-        
-        timeFormatter.timeZone = TimeZone(identifier: timeZone)
-        ampm.timeZone = TimeZone(identifier: timeZone)
-        
-        timeArray[0] = timeFormatter.string(from: Date())
-        timeArray[1] = ampm.string(from: Date())
-        
-        return timeArray
-    }
-    
-    
-    func getDate() -> String { //    TODO: вообще-то это нет смысла вычислять два раза за секунду
-        let usDateFormat = DateFormatter()
-        usDateFormat.dateFormat = "MMM d"
-        usDateFormat.locale = Locale(identifier: "en-US")
-        return usDateFormat.string(from: Date())
-    }
-    
-        
-    // Initializing timezones set via timezones list const
-    func setTimeZones() {
-        
-        var addedTimezone: TRTimeZone
-        
-        for (_, tz) in STtimeZones.enumerated() {
-            addedTimezone = TRTimeZone.init(name: tz)
-            timeZones.append(addedTimezone)
-            
-            // Populating defaults with visibility settings
-            UserDefaults.standard.register(defaults: [addedTimezone.name+"Visibile" : false])
-            
+        if rounded == 0.00 {
+            starterTimer.invalidate()
+            timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerAction), userInfo: nil, repeats: true)
         }
     }
     
-    
-    
-    // TODO: исправить внешний вид шрифта при нажатой кнопке
-    // TODO: перейти на attributed для button-statusmenu
-    
+    // Main timer proc
     func timerAction() {
         
-        buildMenu()
+        // Set current date each new hour
         
+        let date = NSDate()
+        let calendar = NSCalendar.current
+        let minutes = calendar.component(.minute, from: date as Date)
+        let seconds = calendar.component(.second, from: date as Date)
+
+        if (minutes == 0 && seconds == 0) {
+            currentDateString = getDate()
+            NSLog(currentDateString)
+        }
+        
+        // Aggregate and format main string
         let ftz = NSMutableAttributedString(string: "")
         
         var nonvisibleCounter: Int = 0
@@ -143,9 +98,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         for (index, tz) in timeZones.enumerated() {
             
             var timeArray: [String] = ["",""]
-            
             //            var timeAttrString = NSAttributedString(string: "", attributes: timeFontAttributes)
-            
             
             if tz.isLocal() == true {
                 timeArray = formatTime(tz.name, local: true)
@@ -155,21 +108,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 ftz.append(NSAttributedString(string: " ", attributes: ampmFontAttr))
                 
                 if defaults.bool(forKey: displayDateForLocalTZ) == true {
-                    ftz.append(NSAttributedString(string: getDate(), attributes: ampmFontAttr))
+                    ftz.append(NSAttributedString(string: currentDateString, attributes: ampmFontAttr))
                 }
                 
                 previousWasLocal = true
                 
             }
             else {
-                
-                
                 if defaults.bool(forKey: tz.name+"Visible") == true {
-                    
                     if previousWasLocal == true {
                         ftz.append(NSAttributedString(string: " ", attributes: ampmFontAttr))
                     }
-                    
                     
                     timeArray = formatTime(tz.name, local: false)
                     
@@ -184,14 +133,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                     }
                     
                     previousWasLocal = false
-                    
                 }
                 else {
                     nonvisibleCounter += 1
                 }
-                
             }
-            
         }
         
         if nonvisibleCounter == timeZones.endIndex {
@@ -202,140 +148,60 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         mainStatusItem.attributedTitle = ftz
     }
     
-    
-    //TODO: call buildMenu only on user action (click on mainStatusItem)
-    func buildMenu() {
-        
-        var statusItem = NSMenuItem()
-        
-        statusMenu.removeAllItems()
-        
-        // Top menu items
- 
-        let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
-        let build = Bundle.main.infoDictionary?["CFBundleVersion"] as! String
-        let versionString = "Ternary clock (trcl) by Tom Kazakov, v" + version + "(" + build + ")"
-        statusItem = NSMenuItem(title: versionString, action: nil, keyEquivalent: "")
-        statusMenu.addItem(statusItem)
-        statusMenu.addItem(NSMenuItem.separator())
-        
-        
-        // use24HForLocalTZ
-        statusItem = NSMenuItem(title: "Local time in 24H format", action:#selector(self.toggleUse24HForLocalTZ(_:)), keyEquivalent: "")
-        
-        if defaults.bool(forKey: use24HForLocalTZ) == true {
-            statusItem.state = NSOnState
-        } else {
-            statusItem.state = NSOffState
-        }
-        
-        statusMenu.addItem(statusItem)
-        
-        
-        // displayDateForLocalTZ
-        statusItem = NSMenuItem(title: "Display local date", action:#selector(self.toggleDisplayDateForLocalTZ(_:)), keyEquivalent: "")
-        
-        if defaults.bool(forKey: displayDateForLocalTZ) == true {
-            statusItem.state = NSOnState
-        } else {
-            statusItem.state = NSOffState
-        }
-        
-        statusMenu.addItem(statusItem)
-        
-        
-        
-        // Add all timezone items
-        statusMenu.addItem(NSMenuItem.separator())
-        
-        for (index, tz) in timeZones.enumerated() {
-            
-            if tz.isLocal() == true {
-                statusItem = NSMenuItem(title: tz.fancyName(), action: nil, keyEquivalent: "")
-                
-                // Settings on visibility state for the local timezone
-                defaults.set(true, forKey: tz.name+"Visible")
 
-            } else {
-                statusItem = NSMenuItem(title: tz.fancyName(), action:#selector(self.toggleVisibility(_:)), keyEquivalent: "")
+    // Array of time/date values for the main string
+    func formatTime(_ timeZone: String, local: Bool) -> Array<String> {
+        
+        let timeFormatter = DateFormatter()
+        let ampm = DateFormatter()
+        
+        var timeArray: [String] = ["",""]
+        
+        if local {
+            if defaults.bool(forKey: use24HForLocalTZ) == true {
+                timeFormatter.dateFormat = "H:mm"
+                ampm.dateFormat = ""
             }
-            
-            if tz.isLocal() == false && defaults.bool(forKey: tz.name+"Visible") == true {
-                statusItem.state = NSOnState
-            } else {
-                statusItem.state = NSOffState
+            else {
+                timeFormatter.dateFormat = "h:mm"
+                ampm.dateFormat = "a"
             }
-            
-            statusItem.representedObject = timeZones[index]
-            
-            statusMenu.addItem(statusItem)
-            
+        }
+        else {
+            timeFormatter.dateFormat = "h"
+            ampm.dateFormat = "a"
         }
         
-        // Footer menu items
-        statusMenu.addItem(NSMenuItem.separator())
-
-        // autostart
-        statusItem = NSMenuItem(title: "Autostart trcl", action:#selector(self.toggleAutostart(_:)), keyEquivalent: "")
+        timeFormatter.timeZone = TimeZone(identifier: timeZone)
+        ampm.timeZone = TimeZone(identifier: timeZone)
         
-        if defaults.bool(forKey: autostart) == true {
-            statusItem.state = NSOnState
-        } else {
-            statusItem.state = NSOffState
-        }
+        timeArray[0] = timeFormatter.string(from: Date())
+        timeArray[1] = ampm.string(from: Date())
         
-        statusMenu.addItem(statusItem)
-
-        
-        statusMenu.addItem(NSMenuItem.separator())
-        statusMenu.addItem(NSMenuItem(title: "Quit", action:#selector(NSApp.terminate(_:)), keyEquivalent: ""))
-        
-        mainStatusItem.menu = statusMenu
-        
+        return timeArray
     }
     
     
-    func toggleVisibility(_ sender: NSMenuItem) {
-        let tz: TRTimeZone = sender.representedObject as! TRTimeZone
+    // Initializing timezones set via timezones list const
+    func setTimeZones() {
         
-        defaults.set(!defaults.bool(forKey: tz.name+"Visible"), forKey: tz.name+"Visible")
-    }
-    
-    
-    func toggleUse24HForLocalTZ(_ sender: NSMenuItem) {
-        defaults.set(!defaults.bool(forKey: use24HForLocalTZ), forKey: use24HForLocalTZ)
-    }
-    
-    
-    func toggleDisplayDateForLocalTZ(_ sender: NSMenuItem) {
-        defaults.set(!defaults.bool(forKey: displayDateForLocalTZ), forKey: displayDateForLocalTZ)
-    }
-    
-    func toggleAutostart(_ sender: NSMenuItem) {
-        defaults.set(!defaults.bool(forKey: autostart), forKey: autostart)
+        var addedTimezone: TRTimeZone
         
-        let appBundleIdentifier = "kzkv.trclAutostartHelper" as CFString
-        var autostartValue: Bool
-        
-        autostartValue = defaults.bool(forKey: autostart)
-        
-        if SMLoginItemSetEnabled(appBundleIdentifier, autostartValue) {
-            if autostartValue {
-                NSLog(String(defaults.bool(forKey: autostart)))
-                NSLog("trcl: Successfully added login item.")
-            } else {
-                NSLog(String(defaults.bool(forKey: autostart)))
-                NSLog("trcl: Successfully removed login item.")
-            }
+        for (_, tz) in STtimeZones.enumerated() {
+            addedTimezone = TRTimeZone.init(name: tz)
+            timeZones.append(addedTimezone)
             
-        } else {
-            NSLog("trcl: Failed to add login item.")
+            // Populating defaults with visibility settings
+            UserDefaults.standard.register(defaults: [addedTimezone.name+"Visibile" : false])
+            
         }
-        
-    }
-    
-    @IBAction func quitClicked(_ sender: NSMenuItem) {
     }
 
+    func getDate() -> String { //    TODO: вообще-то это нет смысла вычислять два раза за секунду
+        let usDateFormat = DateFormatter()
+        usDateFormat.dateFormat = "MMM d"
+        usDateFormat.locale = Locale(identifier: "en-US")
+        return usDateFormat.string(from: Date())
+    }
     
 }

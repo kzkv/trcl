@@ -9,15 +9,11 @@
 /* Begin PBXBuildFile section */
 		8B743AF01DD7F1170006F8F5 /* TRTimeZone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B743AEF1DD7F1170006F8F5 /* TRTimeZone.swift */; };
 		8B743AF61DD7F2820006F8F5 /* timeZones.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B743AF51DD7F2820006F8F5 /* timeZones.swift */; };
-		8B743AFF1DDBAD0C0006F8F5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B743AFE1DDBAD0C0006F8F5 /* AppDelegate.m */; };
-		8B743B021DDBAD0C0006F8F5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B743B011DDBAD0C0006F8F5 /* main.m */; };
-		8B743B041DDBAD0C0006F8F5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8B743B031DDBAD0C0006F8F5 /* Assets.xcassets */; };
 		8B743B111DDBB0F80006F8F5 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B743B101DDBB0F80006F8F5 /* Globals.swift */; };
-		8B743B121DDC68980006F8F5 /* trclAutostartHelper.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8B743AFB1DDBAD0C0006F8F5 /* trclAutostartHelper.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		8B743B141DDC6C3D0006F8F5 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B743B131DDC6C3D0006F8F5 /* MainMenu.xib */; };
 		8B88E1CB1D3ED26400BADB5D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B88E1CA1D3ED26400BADB5D /* AppDelegate.swift */; };
 		8B88E1CD1D3ED26400BADB5D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8B88E1CC1D3ED26400BADB5D /* Assets.xcassets */; };
 		8B88E1D01D3ED26400BADB5D /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B88E1CE1D3ED26400BADB5D /* MainMenu.xib */; };
+		8B8D76C21E15B9CB009CAF75 /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8D76C11E15B9CB009CAF75 /* MainMenu.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -27,7 +23,6 @@
 			dstPath = Contents/Library/LoginItems;
 			dstSubfolderSpec = 1;
 			files = (
-				8B743B121DDC68980006F8F5 /* trclAutostartHelper.app in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -36,29 +31,16 @@
 /* Begin PBXFileReference section */
 		8B743AEF1DD7F1170006F8F5 /* TRTimeZone.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TRTimeZone.swift; sourceTree = "<group>"; };
 		8B743AF51DD7F2820006F8F5 /* timeZones.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = timeZones.swift; sourceTree = "<group>"; };
-		8B743AFB1DDBAD0C0006F8F5 /* trclAutostartHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = trclAutostartHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		8B743AFD1DDBAD0C0006F8F5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		8B743AFE1DDBAD0C0006F8F5 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		8B743B011DDBAD0C0006F8F5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		8B743B031DDBAD0C0006F8F5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		8B743B081DDBAD0C0006F8F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8B743B101DDBB0F80006F8F5 /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
-		8B743B131DDC6C3D0006F8F5 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
 		8B88E1C71D3ED26400BADB5D /* trcl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = trcl.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B88E1CA1D3ED26400BADB5D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8B88E1CC1D3ED26400BADB5D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8B88E1CF1D3ED26400BADB5D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		8B88E1D11D3ED26400BADB5D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8B8D76C11E15B9CB009CAF75 /* MainMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		8B743AF81DDBAD0C0006F8F5 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		8B88E1C41D3ED26400BADB5D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -69,32 +51,10 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		8B743AFC1DDBAD0C0006F8F5 /* trclAutostartHelper */ = {
-			isa = PBXGroup;
-			children = (
-				8B743AFD1DDBAD0C0006F8F5 /* AppDelegate.h */,
-				8B743AFE1DDBAD0C0006F8F5 /* AppDelegate.m */,
-				8B743B031DDBAD0C0006F8F5 /* Assets.xcassets */,
-				8B743B081DDBAD0C0006F8F5 /* Info.plist */,
-				8B743B001DDBAD0C0006F8F5 /* Supporting Files */,
-				8B743B131DDC6C3D0006F8F5 /* MainMenu.xib */,
-			);
-			path = trclAutostartHelper;
-			sourceTree = "<group>";
-		};
-		8B743B001DDBAD0C0006F8F5 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				8B743B011DDBAD0C0006F8F5 /* main.m */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		8B88E1BE1D3ED26400BADB5D = {
 			isa = PBXGroup;
 			children = (
 				8B88E1C91D3ED26400BADB5D /* trcl */,
-				8B743AFC1DDBAD0C0006F8F5 /* trclAutostartHelper */,
 				8B88E1C81D3ED26400BADB5D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -103,7 +63,6 @@
 			isa = PBXGroup;
 			children = (
 				8B88E1C71D3ED26400BADB5D /* trcl.app */,
-				8B743AFB1DDBAD0C0006F8F5 /* trclAutostartHelper.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -116,6 +75,7 @@
 				8B743AF51DD7F2820006F8F5 /* timeZones.swift */,
 				8B88E1CC1D3ED26400BADB5D /* Assets.xcassets */,
 				8B88E1CE1D3ED26400BADB5D /* MainMenu.xib */,
+				8B8D76C11E15B9CB009CAF75 /* MainMenu.swift */,
 				8B88E1D11D3ED26400BADB5D /* Info.plist */,
 				8B743AEF1DD7F1170006F8F5 /* TRTimeZone.swift */,
 			);
@@ -125,23 +85,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8B743AFA1DDBAD0C0006F8F5 /* trclAutostartHelper */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 8B743B091DDBAD0C0006F8F5 /* Build configuration list for PBXNativeTarget "trclAutostartHelper" */;
-			buildPhases = (
-				8B743AF71DDBAD0C0006F8F5 /* Sources */,
-				8B743AF81DDBAD0C0006F8F5 /* Frameworks */,
-				8B743AF91DDBAD0C0006F8F5 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = trclAutostartHelper;
-			productName = trclAutostartHelper;
-			productReference = 8B743AFB1DDBAD0C0006F8F5 /* trclAutostartHelper.app */;
-			productType = "com.apple.product-type.application";
-		};
 		8B88E1C61D3ED26400BADB5D /* trcl */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8B88E1D41D3ED26400BADB5D /* Build configuration list for PBXNativeTarget "trcl" */;
@@ -172,10 +115,6 @@
 				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = "Tom Kazakov";
 				TargetAttributes = {
-					8B743AFA1DDBAD0C0006F8F5 = {
-						CreatedOnToolsVersion = 8.1;
-						ProvisioningStyle = Automatic;
-					};
 					8B88E1C61D3ED26400BADB5D = {
 						CreatedOnToolsVersion = 7.3.1;
 						LastSwiftMigration = 0810;
@@ -196,21 +135,11 @@
 			projectRoot = "";
 			targets = (
 				8B88E1C61D3ED26400BADB5D /* trcl */,
-				8B743AFA1DDBAD0C0006F8F5 /* trclAutostartHelper */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		8B743AF91DDBAD0C0006F8F5 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				8B743B041DDBAD0C0006F8F5 /* Assets.xcassets in Resources */,
-				8B743B141DDC6C3D0006F8F5 /* MainMenu.xib in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		8B88E1C51D3ED26400BADB5D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -255,19 +184,11 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		8B743AF71DDBAD0C0006F8F5 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				8B743B021DDBAD0C0006F8F5 /* main.m in Sources */,
-				8B743AFF1DDBAD0C0006F8F5 /* AppDelegate.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		8B88E1C31D3ED26400BADB5D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B8D76C21E15B9CB009CAF75 /* MainMenu.swift in Sources */,
 				8B743AF01DD7F1170006F8F5 /* TRTimeZone.swift in Sources */,
 				8B88E1CB1D3ED26400BADB5D /* AppDelegate.swift in Sources */,
 				8B743AF61DD7F2820006F8F5 /* timeZones.swift in Sources */,
@@ -289,38 +210,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		8B743B0A1DDBAD0C0006F8F5 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_SUSPICIOUS_MOVES = YES;
-				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = trclAutostartHelper/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				PRODUCT_BUNDLE_IDENTIFIER = kzkv.trclAutostartHelper;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-			};
-			name = Debug;
-		};
-		8B743B0B1DDBAD0C0006F8F5 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_SUSPICIOUS_MOVES = YES;
-				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = trclAutostartHelper/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				PRODUCT_BUNDLE_IDENTIFIER = kzkv.trclAutostartHelper;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-			};
-			name = Release;
-		};
 		8B88E1D21D3ED26400BADB5D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -413,6 +302,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = YES;
 				INFOPLIST_FILE = trcl/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = kzkv.trcl;
@@ -426,6 +316,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = YES;
 				INFOPLIST_FILE = trcl/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = kzkv.trcl;
@@ -437,14 +328,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		8B743B091DDBAD0C0006F8F5 /* Build configuration list for PBXNativeTarget "trclAutostartHelper" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				8B743B0A1DDBAD0C0006F8F5 /* Debug */,
-				8B743B0B1DDBAD0C0006F8F5 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-		};
 		8B88E1C21D3ED26400BADB5D /* Build configuration list for PBXProject "trcl" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
