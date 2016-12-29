@@ -20,3 +20,16 @@ var timeZones = [TRTimeZone]()
 
 // Current date for the main string
 var currentDateString = String()
+
+
+// Setting current date on calendar change 
+func getDate() -> String {
+    let usDateFormat = DateFormatter()
+    usDateFormat.dateFormat = "MMM d"
+    usDateFormat.locale = Locale(identifier: "en-US")
+    return usDateFormat.string(from: Date())
+}
+
+func calendarDayDidChange(notification: Notification) -> Void {
+    currentDateString = getDate()
+}

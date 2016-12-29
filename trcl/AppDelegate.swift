@@ -46,6 +46,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         starterTimer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(starterTimerAction), userInfo: nil, repeats: true)
         
+        // Getting a notification on a date change
+        NotificationCenter.default.addObserver(forName:Notification.Name.NSCalendarDayChanged,
+                                               object:nil, queue:nil, using:calendarDayDidChange)
     }
     
     // Setting main timer in sync with system clock
@@ -63,19 +66,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     // Main timer proc
     func timerAction() {
-        
-        // Set current date each new hour
-        
-        let date = NSDate()
-        let calendar = NSCalendar.current
-        let minutes = calendar.component(.minute, from: date as Date)
-        let seconds = calendar.component(.second, from: date as Date)
-
-        if (minutes == 0 && seconds == 0) {
-            currentDateString = getDate()
-            NSLog(currentDateString)
-        }
-        
         // Aggregate and format main string
         let ftz = NSMutableAttributedString(string: "")
         
@@ -195,13 +185,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             UserDefaults.standard.register(defaults: [addedTimezone.name+"Visibile" : false])
             
         }
-    }
-
-    func getDate() -> String { //    TODO: вообще-то это нет смысла вычислять два раза за секунду
-        let usDateFormat = DateFormatter()
-        usDateFormat.dateFormat = "MMM d"
-        usDateFormat.locale = Locale(identifier: "en-US")
-        return usDateFormat.string(from: Date())
     }
     
 }

@@ -21,7 +21,7 @@ class MainMenu: NSObject, NSMenuDelegate {
 
         //        statusMenu.delegate = self.statusMenu
         
-        print("Menu needs update")
+        print("Menu needs an update")
         
         print(menu.title)
         
