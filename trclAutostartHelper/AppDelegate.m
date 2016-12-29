@@ -21,9 +21,10 @@
     pathComponents = [pathComponents subarrayWithRange:NSMakeRange(0, [pathComponents count] - 4)];
     NSString *path = [NSString pathWithComponents:pathComponents];
     [[NSWorkspace sharedWorkspace] launchApplication:path];
-    [NSApp terminate:nil];
-    
+
     NSLog(@"trcl: Started the main bundle (probably)");
+
+    [NSApp terminate:nil];
     
 }
 

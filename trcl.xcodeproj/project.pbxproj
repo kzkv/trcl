@@ -18,6 +18,7 @@
 		8B88E1CB1D3ED26400BADB5D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B88E1CA1D3ED26400BADB5D /* AppDelegate.swift */; };
 		8B88E1CD1D3ED26400BADB5D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8B88E1CC1D3ED26400BADB5D /* Assets.xcassets */; };
 		8B88E1D01D3ED26400BADB5D /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B88E1CE1D3ED26400BADB5D /* MainMenu.xib */; };
+		8B8A5F381DDCF88F00159905 /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B8A5F361DDCF86600159905 /* ServiceManagement.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -49,6 +50,7 @@
 		8B88E1CC1D3ED26400BADB5D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8B88E1CF1D3ED26400BADB5D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		8B88E1D11D3ED26400BADB5D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8B8A5F361DDCF86600159905 /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B8A5F381DDCF88F00159905 /* ServiceManagement.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -96,6 +99,7 @@
 				8B88E1C91D3ED26400BADB5D /* trcl */,
 				8B743AFC1DDBAD0C0006F8F5 /* trclAutostartHelper */,
 				8B88E1C81D3ED26400BADB5D /* Products */,
+				8B8A5F351DDCF86500159905 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -120,6 +124,14 @@
 				8B743AEF1DD7F1170006F8F5 /* TRTimeZone.swift */,
 			);
 			path = trcl;
+			sourceTree = "<group>";
+		};
+		8B8A5F351DDCF86500159905 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8B8A5F361DDCF86600159905 /* ServiceManagement.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -444,6 +456,7 @@
 				8B743B0B1DDBAD0C0006F8F5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		8B88E1C21D3ED26400BADB5D /* Build configuration list for PBXProject "trcl" */ = {
 			isa = XCConfigurationList;
