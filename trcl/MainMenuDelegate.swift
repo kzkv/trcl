@@ -41,6 +41,7 @@ class MainMenuDelegate: NSObject, NSMenuDelegate {
             statusItem.state = NSOffState
         }
         
+        statusItem.target = self;
         menu.addItem(statusItem)
         
         
@@ -53,6 +54,7 @@ class MainMenuDelegate: NSObject, NSMenuDelegate {
             statusItem.state = NSOffState
         }
         
+        statusItem.target = self;
         menu.addItem(statusItem)
         
         
@@ -80,6 +82,7 @@ class MainMenuDelegate: NSObject, NSMenuDelegate {
             
             statusItem.representedObject = timeZones[index]
             
+            statusItem.target = self;
             menu.addItem(statusItem)
             
         }

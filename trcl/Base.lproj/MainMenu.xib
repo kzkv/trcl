@@ -18,7 +18,7 @@
             </connections>
         </customObject>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
-        <menu title="Status Menu" autoenablesItems="NO" id="HO1-iG-96O">
+        <menu title="Status Menu" id="HO1-iG-96O">
             <items>
                 <menuItem title="Item" id="AOJ-9e-E3o">
                     <modifierMask key="keyEquivalentModifierMask"/>
