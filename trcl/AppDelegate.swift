@@ -21,11 +21,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     // Current bundle name to a constant
     let APPNAME = Bundle.main.infoDictionary!["CFBundleName"] as! String
 
-    @IBOutlet weak var statusMenu: NSMenu!
-//    var statusMenu = NSMenu(title: "Status Menu")
-    
-    // NSMenuDelegate call
-    
+    @IBOutlet weak var mainMenu: NSMenu!
+    var mainMenuDelegate = MainMenuDelegate()
+
     let mainStatusItem = NSStatusBar.system().statusItem(withLength: -1)
     
     var timer = Timer()    
@@ -33,6 +31,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     
     func applicationDidFinishLaunching(_ notification: Notification) {
+        
+        // Assaigning a delegate to the mainMenu object
+        mainMenu.delegate = mainMenuDelegate
+        
+        mainStatusItem.menu = mainMenu
+        
+//        NSLog(mainMenu.delegate as! String)
         
         currentDateString = getDate()
         
@@ -186,5 +191,4 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             
         }
     }
-    
 }

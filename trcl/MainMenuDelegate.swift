@@ -8,28 +8,15 @@
 
 import Cocoa
 
-class MainMenu: NSObject, NSMenuDelegate {
+class MainMenuDelegate: NSObject, NSMenuDelegate {
+    
+//    lazy var appDelegate = NSApplication.shared().delegate as! AppDelegate
     
     func menuNeedsUpdate(_ menu: NSMenu) {
-    
-//        let appDelegate = NSApplication.shared().delegate as! AppDelegate
-//        appDelegate.statusMenu.delegate = appDelegate.statusMenu as! NSMenuDelegate?
-//        NSMenu.popUpContextMenu(appDelegate.statusMenu, withEvent: menuNeedsUpdate, forView: self)
         
-//        let statusMenu = NSMenu(title: "Status Menu")
-//        statusMenu.delegate = self
-
-        //        statusMenu.delegate = self.statusMenu
-        
-        print("Menu needs an update")
-        
-        print(menu.title)
-        
-        //        menu.delegate = self.statusMenu as! NSMenuDelegate?
-        
-        //        if (menu != self.statusMenu) {
-        //            return
-        //        }
+//        if (menu != appDelegate.mainMenu) {
+//            return
+//        }
         
         var statusItem = NSMenuItem()
         
@@ -112,8 +99,6 @@ class MainMenu: NSObject, NSMenuDelegate {
         
         menu.addItem(NSMenuItem(title: "Quit", action:#selector(NSApp.terminate(_:)), keyEquivalent: ""))
         
-        //        mainStatusItem.menu = statusMenu
-        //        buildMenu()
     }
     
     func toggleVisibility(_ sender: NSMenuItem) {
