@@ -7,8 +7,6 @@
 //
 
 // TODO: autostart
-// TODO: исправить внешний вид шрифта при нажатой кнопке
-// TODO: перейти на attributed для button-statusmenu
 
 import Cocoa
 import Foundation
@@ -87,7 +85,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         let timeFontAttr = [ NSFontAttributeName: NSFont.menuBarFont(ofSize: 0) ]
         //        let dateFontAttr = [ NSFontAttributeName: NSFont.menuBarFontOfSize(10) ]
-        let notLocalFontAttr = [ NSForegroundColorAttributeName: NSColor.gray ]
+        
+        //        let notLocalFontAttr = [ NSForegroundColorAttributeName: NSColor.gray ]
+        // TODO: text gets weird outline with coloring
+        
         
         
         for (index, tz) in timeZones.enumerated() {
@@ -117,11 +118,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                     
                     timeArray = formatTime(tz.name, local: false)
                     
-                    let rangeStart = ftz.length
+//                    let rangeStart = ftz.length
                     
                     ftz.append(NSAttributedString(string: timeArray[0], attributes: timeFontAttr))
                     ftz.append(NSAttributedString(string: timeArray[1], attributes: ampmFontAttr))
-                    ftz.addAttributes(notLocalFontAttr, range: NSMakeRange(rangeStart, ftz.length-rangeStart))
+//                    ftz.addAttributes(notLocalFontAttr, range: NSMakeRange(rangeStart, ftz.length-rangeStart))
                     
                     if index != timeZones.count {
                         ftz.append(NSAttributedString(string: " ", attributes: ampmFontAttr))
