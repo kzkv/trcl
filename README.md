@@ -2,7 +2,7 @@
 
 This is a macOS app which displays current time in several timezones of your choosing:
 
-![trcl in system menu](https://dl.dropboxusercontent.com/u/648764/trcl-v1.0.17-status.png "")
+<img src="https://dl.dropboxusercontent.com/u/648764/trcl-v1.0.17-status.png" width="292">
 
 The idea is to give the user time in other region at a shortest glance without having to constantly make the calculations. 
 
@@ -10,7 +10,7 @@ I needed this because my partners are in California, my wife works with a compan
 
 There are all non-fractional time offsets at your disposal, along with 12/24 hours clock setting for local time: 
 
-![trcl menu](https://dl.dropboxusercontent.com/u/648764/trcl-v1.0.17.png "")
+<img src="https://dl.dropboxusercontent.com/u/648764/trcl-v1.0.17.png" width="412">
 
 To install the app please download the latest build from [releases section](https://github.com/kzkv/trcl/releases), unpack it and move to Applications folder.
 
