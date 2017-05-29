@@ -30,6 +30,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func applicationDidFinishLaunching(_ notification: Notification) {
         
+//        tzResearch()
+                
         // Assaigning a delegate to the mainMenu object
         mainMenu.delegate = mainMenuDelegate
         
