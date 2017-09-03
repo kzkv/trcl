@@ -68,7 +68,7 @@ class MainMenuDelegate: NSObject, NSMenuDelegate {
                 statusItem = NSMenuItem(title: tz.fancyName(), action: nil, keyEquivalent: "")
                 
                 // Settings on visibility state for the local timezone
-                defaults.set(true, forKey: tz.name+"Visible")
+                defaults.set(false, forKey: tz.name+"Visible")
                 
             } else {
                 statusItem = NSMenuItem(title: tz.fancyName(), action:#selector(self.toggleVisibility(_:)), keyEquivalent: "")

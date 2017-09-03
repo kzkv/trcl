@@ -97,6 +97,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             //            var timeAttrString = NSAttributedString(string: "", attributes: timeFontAttributes)
             
             if tz.isLocal() == true {
+                if previousWasLocal != true {
+
+                
                 timeArray = formatTime(tz.name, local: true)
                 
                 ftz.append(NSAttributedString(string: timeArray[0], attributes: timeFontAttr))
@@ -108,7 +111,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 }
                 
                 previousWasLocal = true
-                
+                }
             }
             else {
                 if defaults.bool(forKey: tz.name+"Visible") == true {
@@ -189,7 +192,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             
             // Populating defaults with visibility settings
             UserDefaults.standard.register(defaults: [addedTimezone.name+"Visibile" : false])
-            
         }
     }
 }
