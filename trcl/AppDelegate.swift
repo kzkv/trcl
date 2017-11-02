@@ -28,9 +28,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var starterTimer = Timer()
     
     
+    let popover = NSPopover()
+    // popover window
+    
+    
     func applicationDidFinishLaunching(_ notification: Notification) {
         
-//        tzResearch()
+        tzResearch()
                 
         // Assaigning a delegate to the mainMenu object
         mainMenu.delegate = mainMenuDelegate
@@ -54,6 +58,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Getting a notification on a date change
         NotificationCenter.default.addObserver(forName:Notification.Name.NSCalendarDayChanged,
                                                object:nil, queue:nil, using:calendarDayDidChange)
+
+        
+        // popover activation
+        popover.contentViewController = PopoverViewController(nibName: "PopoverViewController", bundle: nil)
+//        popover.show(relativeTo: mainStatusItem.button?.bounds, of: button, preferredEdge: NSRectEdge.minY)
+
+        
+        
     }
     
     // Setting main timer in sync with system clock

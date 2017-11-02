@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8B2B43C51FAA9A32004BF983 /* PopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B2B43C31FAA9A32004BF983 /* PopoverViewController.swift */; };
+		8B2B43C61FAA9A32004BF983 /* PopoverViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B2B43C41FAA9A32004BF983 /* PopoverViewController.xib */; };
 		8B743AF01DD7F1170006F8F5 /* TRTimeZone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B743AEF1DD7F1170006F8F5 /* TRTimeZone.swift */; };
 		8B743AF61DD7F2820006F8F5 /* timeZones.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B743AF51DD7F2820006F8F5 /* timeZones.swift */; };
 		8B743B111DDBB0F80006F8F5 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B743B101DDBB0F80006F8F5 /* Globals.swift */; };
@@ -29,6 +31,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8B2B43C31FAA9A32004BF983 /* PopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverViewController.swift; sourceTree = "<group>"; };
+		8B2B43C41FAA9A32004BF983 /* PopoverViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PopoverViewController.xib; sourceTree = "<group>"; };
 		8B743AEF1DD7F1170006F8F5 /* TRTimeZone.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TRTimeZone.swift; sourceTree = "<group>"; };
 		8B743AF51DD7F2820006F8F5 /* timeZones.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = timeZones.swift; sourceTree = "<group>"; };
 		8B743B101DDBB0F80006F8F5 /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
@@ -70,6 +74,8 @@
 		8B88E1C91D3ED26400BADB5D /* trcl */ = {
 			isa = PBXGroup;
 			children = (
+				8B2B43C31FAA9A32004BF983 /* PopoverViewController.swift */,
+				8B2B43C41FAA9A32004BF983 /* PopoverViewController.xib */,
 				8B88E1CA1D3ED26400BADB5D /* AppDelegate.swift */,
 				8B743B101DDBB0F80006F8F5 /* Globals.swift */,
 				8B743AF51DD7F2820006F8F5 /* timeZones.swift */,
@@ -144,6 +150,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B2B43C61FAA9A32004BF983 /* PopoverViewController.xib in Resources */,
 				8B88E1CD1D3ED26400BADB5D /* Assets.xcassets in Resources */,
 				8B88E1D01D3ED26400BADB5D /* MainMenu.xib in Resources */,
 			);
@@ -192,6 +199,7 @@
 				8B743AF01DD7F1170006F8F5 /* TRTimeZone.swift in Sources */,
 				8B88E1CB1D3ED26400BADB5D /* AppDelegate.swift in Sources */,
 				8B743AF61DD7F2820006F8F5 /* timeZones.swift in Sources */,
+				8B2B43C51FAA9A32004BF983 /* PopoverViewController.swift in Sources */,
 				8B743B111DDBB0F80006F8F5 /* Globals.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
