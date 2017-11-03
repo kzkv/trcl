@@ -34,10 +34,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func applicationDidFinishLaunching(_ notification: Notification) {
         
+        // declaring button made of StatusItem
+        let button = mainStatusItem.button
+
+        
         tzResearch()
                 
         // Assaigning a delegate to the mainMenu object
-        mainMenu.delegate = mainMenuDelegate
+//        mainMenu.delegate = mainMenuDelegate
         
         mainStatusItem.menu = mainMenu
         
@@ -62,11 +66,35 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         // popover activation
         popover.contentViewController = PopoverViewController(nibName: "PopoverViewController", bundle: nil)
-//        popover.show(relativeTo: mainStatusItem.button?.bounds, of: button, preferredEdge: NSRectEdge.minY)
-
+        popover.animates = false
         
+        
+        // uses "button" made of statusmenu item
+//        popover.show(relativeTo: button!.bounds, of: button!, preferredEdge: NSRectEdge.maxY)
+
+        button?.action = #selector(AppDelegate.togglePopover(sender:))
         
     }
+    
+    // popover management
+    func togglePopover(sender: AnyObject?) {
+        if popover.isShown {
+            closePopover(sender: sender)
+        } else {
+            showPopover(sender: sender)
+        }
+    }
+    
+    func showPopover(sender: AnyObject?) {
+        if let button = mainStatusItem.button {
+            popover.show(relativeTo: button.bounds, of: button, preferredEdge: NSRectEdge.minY)
+        }
+    }
+    
+    func closePopover(sender: AnyObject?) {
+        popover.performClose(sender)
+    }
+    
     
     // Setting main timer in sync with system clock
     func starterTimerAction() {
