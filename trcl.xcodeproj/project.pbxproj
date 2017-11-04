@@ -8,10 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		8B2B43C51FAA9A32004BF983 /* PopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B2B43C31FAA9A32004BF983 /* PopoverViewController.swift */; };
-		8B2B43C61FAA9A32004BF983 /* PopoverViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B2B43C41FAA9A32004BF983 /* PopoverViewController.xib */; };
+		8B2B43C61FAA9A32004BF983 /* Popover.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B2B43C41FAA9A32004BF983 /* Popover.xib */; };
 		8B743AF01DD7F1170006F8F5 /* TRTimeZone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B743AEF1DD7F1170006F8F5 /* TRTimeZone.swift */; };
 		8B743AF61DD7F2820006F8F5 /* timeZones.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B743AF51DD7F2820006F8F5 /* timeZones.swift */; };
 		8B743B111DDBB0F80006F8F5 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B743B101DDBB0F80006F8F5 /* Globals.swift */; };
+		8B7CEE0A1FAD5C6800C807A4 /* EventMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B7CEE091FAD5C6800C807A4 /* EventMonitor.swift */; };
 		8B88E1CB1D3ED26400BADB5D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B88E1CA1D3ED26400BADB5D /* AppDelegate.swift */; };
 		8B88E1CD1D3ED26400BADB5D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8B88E1CC1D3ED26400BADB5D /* Assets.xcassets */; };
 		8B88E1D01D3ED26400BADB5D /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B88E1CE1D3ED26400BADB5D /* MainMenu.xib */; };
@@ -32,10 +33,11 @@
 
 /* Begin PBXFileReference section */
 		8B2B43C31FAA9A32004BF983 /* PopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverViewController.swift; sourceTree = "<group>"; };
-		8B2B43C41FAA9A32004BF983 /* PopoverViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PopoverViewController.xib; sourceTree = "<group>"; };
+		8B2B43C41FAA9A32004BF983 /* Popover.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Popover.xib; sourceTree = "<group>"; };
 		8B743AEF1DD7F1170006F8F5 /* TRTimeZone.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TRTimeZone.swift; sourceTree = "<group>"; };
 		8B743AF51DD7F2820006F8F5 /* timeZones.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = timeZones.swift; sourceTree = "<group>"; };
 		8B743B101DDBB0F80006F8F5 /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
+		8B7CEE091FAD5C6800C807A4 /* EventMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventMonitor.swift; sourceTree = "<group>"; };
 		8B88E1C71D3ED26400BADB5D /* trcl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = trcl.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B88E1CA1D3ED26400BADB5D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8B88E1CC1D3ED26400BADB5D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -75,8 +77,9 @@
 			isa = PBXGroup;
 			children = (
 				8B2B43C31FAA9A32004BF983 /* PopoverViewController.swift */,
-				8B2B43C41FAA9A32004BF983 /* PopoverViewController.xib */,
+				8B2B43C41FAA9A32004BF983 /* Popover.xib */,
 				8B88E1CA1D3ED26400BADB5D /* AppDelegate.swift */,
+				8B7CEE091FAD5C6800C807A4 /* EventMonitor.swift */,
 				8B743B101DDBB0F80006F8F5 /* Globals.swift */,
 				8B743AF51DD7F2820006F8F5 /* timeZones.swift */,
 				8B88E1CC1D3ED26400BADB5D /* Assets.xcassets */,
@@ -150,7 +153,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8B2B43C61FAA9A32004BF983 /* PopoverViewController.xib in Resources */,
+				8B2B43C61FAA9A32004BF983 /* Popover.xib in Resources */,
 				8B88E1CD1D3ED26400BADB5D /* Assets.xcassets in Resources */,
 				8B88E1D01D3ED26400BADB5D /* MainMenu.xib in Resources */,
 			);
@@ -199,6 +202,7 @@
 				8B743AF01DD7F1170006F8F5 /* TRTimeZone.swift in Sources */,
 				8B88E1CB1D3ED26400BADB5D /* AppDelegate.swift in Sources */,
 				8B743AF61DD7F2820006F8F5 /* timeZones.swift in Sources */,
+				8B7CEE0A1FAD5C6800C807A4 /* EventMonitor.swift in Sources */,
 				8B2B43C51FAA9A32004BF983 /* PopoverViewController.swift in Sources */,
 				8B743B111DDBB0F80006F8F5 /* Globals.swift in Sources */,
 			);

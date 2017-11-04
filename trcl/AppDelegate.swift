@@ -32,6 +32,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     // popover window
     
     
+    // event monitor to make the popover go away
+    var eventMonitor: EventMonitor?
+    
+    
     func applicationDidFinishLaunching(_ notification: Notification) {
         
         // declaring button made of StatusItem
@@ -65,7 +69,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         
         // popover activation
-        popover.contentViewController = PopoverViewController(nibName: "PopoverViewController", bundle: nil)
+        popover.contentViewController = PopoverViewController(nibName: "Popover", bundle: nil)
         popover.animates = false
         
         
@@ -74,7 +78,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         button?.action = #selector(AppDelegate.togglePopover(sender:))
         
+        // EventMonitor instance
+        eventMonitor = EventMonitor(mask: [.leftMouseUp, .rightMouseUp]) { [unowned self] event in
+            if self.popover.isShown {
+                self.closePopover(sender: event)
+            }
+        }
+        
     }
+    
     
     // popover management
     func togglePopover(sender: AnyObject?) {
@@ -84,15 +96,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             showPopover(sender: sender)
         }
     }
-    
     func showPopover(sender: AnyObject?) {
         if let button = mainStatusItem.button {
             popover.show(relativeTo: button.bounds, of: button, preferredEdge: NSRectEdge.minY)
+            eventMonitor?.start()
         }
     }
-    
     func closePopover(sender: AnyObject?) {
         popover.performClose(sender)
+        eventMonitor?.stop()
     }
     
     
