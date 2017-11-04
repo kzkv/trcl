@@ -21,6 +21,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     @IBOutlet weak var mainMenu: NSMenu!
     var mainMenuDelegate = MainMenuDelegate()
+    
+    
+    @IBAction func quitApp(_ sender: Any) {
+        NSApplication.shared().terminate(sender)
+    }
+    
 
     let mainStatusItem = NSStatusBar.system().statusItem(withLength: -1)
     
